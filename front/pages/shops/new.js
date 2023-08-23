@@ -140,7 +140,7 @@ const NewShop = () => {
             render={({ field }) => (
               <TextField
                 { ...field }
-                label="食券購入タイミング(列に並ぶ前・入店後等)"
+                label="食券購入タイミング(列に並ぶ前・入店時等)"
                 variant="outlined"
                 fullWidth
                 multiline

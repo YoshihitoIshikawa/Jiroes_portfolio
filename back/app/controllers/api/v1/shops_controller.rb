@@ -28,10 +28,12 @@ class Api::V1::ShopsController < ApplicationController
   end
 
   def destroy
+    @shop = Shop.find(params[:id])
     @shop.destroy
   end
 
   private
   def shop_params
-    params.require(:shop).permit(:name,:post_id, :address, :phone_number, :access, :parking, :open_time, :closed_days, :remarks, :prohibited_matters, when_to_buy_tickets, call_timing)
+    params.permit(:name, :address, :phone_number, :access, :parking, :open_time, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
+  end
 end

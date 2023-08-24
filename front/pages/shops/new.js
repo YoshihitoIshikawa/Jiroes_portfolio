@@ -1,11 +1,17 @@
 import { useForm, Controller } from "react-hook-form";
-import { Box, Button, TextField, FormControl } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const NewShop = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const schema = yup.object({
+    name: yup.string().required('店舗名は入力必須項目です。')
+  });
+
+  const { control, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
   const router = useRouter();
 
   const [name, setName] = useState("");
@@ -59,9 +65,6 @@ const NewShop = () => {
               name="name"
               control={control}
               defaultValue=""
-              rules={{
-                required: { value: true, message: '*店舗名は必須項目です。' }
-              }}
               render={({ field }) => (
                 <TextField
                   { ...field }

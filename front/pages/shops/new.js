@@ -24,7 +24,7 @@ export default function NewShop() {
 
   return(
     <div className="flex justify-center mt-20">
-      <div className="sm:w-1/2 flex flex-col justify-center">
+      <div className="sm:w-1/2 flex flex-col">
         <h1 className="text-4xl mb-8">新規店舗登録</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb={2}>

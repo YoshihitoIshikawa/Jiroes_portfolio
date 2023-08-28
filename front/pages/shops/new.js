@@ -99,6 +99,16 @@ export default function NewShop() {
           </Box>
           <Box mb={2}>
             <TextField
+              { ...register('menu') }
+              label="メニュー"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
               { ...register('when_to_buy_tickets') }
               label="食券購入タイミング(列に並ぶ前・入店時等)"
               variant="outlined"

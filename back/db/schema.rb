@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_18_130459) do
+ActiveRecord::Schema.define(version: 2023_08_28_100959) do
 
   create_table "shops", force: :cascade do |t|
-    t.integer "post_id"
     t.string "name"
     t.string "address"
     t.string "phone_number"
@@ -27,6 +26,7 @@ ActiveRecord::Schema.define(version: 2023_08_18_130459) do
     t.text "call_timing"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "menu"
   end
 
 end

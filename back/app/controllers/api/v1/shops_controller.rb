@@ -34,6 +34,6 @@ class Api::V1::ShopsController < ApplicationController
 
   private
   def shop_params
-    params.permit(:name, :address, :phone_number, :access, :parking, :open_time, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
+    params.permit(:name, :address, :phone_number, :access, :parking, :open_time, :menu, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
   end
 end

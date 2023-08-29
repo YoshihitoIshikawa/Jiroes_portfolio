@@ -40,7 +40,7 @@ export default function NewShop() {
           <Box mb={2}>
             <TextField
               { ...register('address') }
-              label="住所"
+              label="所在地"
               variant="outlined"
               fullWidth
               multiline
@@ -110,7 +110,7 @@ export default function NewShop() {
           <Box mb={2}>
             <TextField
               { ...register('when_to_buy_tickets') }
-              label="食券購入タイミング(列に並ぶ前・入店時等)"
+              label="食券購入(列に並ぶ前・入店時等)"
               variant="outlined"
               fullWidth
               multiline
@@ -120,7 +120,7 @@ export default function NewShop() {
           <Box mb={2}>
             <TextField
               { ...register('call_timing') }
-              label="コールタイミング(食券提出時・商品提供直前等)"
+              label="コール(タイミングや店舗独自の仕方等)"
               variant="outlined"
               fullWidth
               multiline

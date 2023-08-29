@@ -17,7 +17,7 @@ export default function IndexShops({shops}) {
       <div className="sm:w-1/2 flex flex-col">
         {shops.map((shop) => (
           <Box className="m-4" key={shop.id}>
-            <Link href={"/"}>{shop.name}</Link>
+            <Link href={`/shops/${shop.id}`}>{shop.name}</Link>
           </Box>
         ))}
       </div>

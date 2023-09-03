@@ -27,7 +27,7 @@ const Profile = () => {
               </div>
               <div className="mb-10">
                 <h2 className="text-2xl mb-2">ユーザーネーム</h2>
-                <p>{user.name}</p>
+                <p>{user.nickname}</p>
               </div>
               <div className="mb-10">
                 <h2 className="text-2xl mb-2">メールアドレス</h2>

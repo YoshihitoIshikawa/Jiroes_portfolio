@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'users/index'
   namespace :api do
     namespace :v1 do
-      resources :users, only: :index
+      resources :users, only: [:index, :create]
       resources :shops, only: [:index, :create, :show, :update, :destroy] do
         resources :reviews, only: [:index, :create, :show, :update, :destroy]
       end

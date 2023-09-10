@@ -33,3 +33,4 @@
 /config/credentials/development.key
 
 .env
+/public/uploads

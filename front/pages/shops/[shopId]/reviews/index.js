@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from 'next/router';
+import LoginButton from "@/components/logInButton";
 
 const index = () => {
   const { user, isLoading, isAuthenticated } = useAuth0();
@@ -19,11 +20,14 @@ const index = () => {
 
   if (isAuthenticated) {
     return(
-      <h1>Hello World/{shopId}{ user.nickname }</h1>
+      <h1>Hello World/{shopId}/{ user.nickname }</h1>
     )
   } else {
     return(
-      <h1>ログインして下さい。</h1>
+      <div>
+        <h1>ログインして下さい。</h1>
+        <LoginButton/>
+      </div>
     )
   }
 };

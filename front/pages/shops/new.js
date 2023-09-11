@@ -89,6 +89,16 @@ export default function NewShop() {
           </Box>
           <Box mb={2}>
             <TextField
+              { ...register('number_of_seats') }
+              label="座席数"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
               { ...register('parking') }
               label="駐車場(有・無・その他詳細)"
               variant="outlined"

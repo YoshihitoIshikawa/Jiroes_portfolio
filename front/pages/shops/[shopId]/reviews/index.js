@@ -6,7 +6,6 @@ const index = () => {
   const { user, isLoading, isAuthenticated } = useAuth0();
   const router = useRouter();
   const { shopId } = router.query;
-  console.log({ user });
 
   if (isLoading) {
     return (

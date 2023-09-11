@@ -79,6 +79,14 @@ export default function ShopPage({ shop }) {
                   </tr>
                   <tr className="border-b dark:border-neutral-500">
                     <th className="whitespace-nowrap px-6 py-4">
+                      座席数
+                    </th>
+                    <td className="whitespace-pre-wrap px-6 py-4">
+                      { shop.number_of_seats }
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:border-neutral-500">
+                    <th className="whitespace-nowrap px-6 py-4">
                     駐車場
                     </th>
                     <td className="whitespace-pre-wrap px-6 py-4">

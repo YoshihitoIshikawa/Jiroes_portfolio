@@ -1,12 +1,11 @@
 class Api::V1::ReviewsController < ApplicationController
   def index
     @shop = Shop.find(params[:shop_id])
-    @reviews = Review.where(shop_id: @shop.id)
+    @reviews = @shop.reviews
     render json: @reviews
   end
 
   def create
-
     @review = Review.new(review_params)
     if @review.save
       render json: @review, status: :created

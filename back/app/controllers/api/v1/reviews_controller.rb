@@ -1,7 +1,7 @@
 class Api::V1::ReviewsController < ApplicationController
   def index
-    @shop = Shop.new(shop_params)
-    @reviews = Review.all
+    @shop = Shop.find(params[:shop_id])
+    @reviews = Review.where(shop_id: @shop.id)
     render json: @reviews
   end
 

@@ -1,4 +1,4 @@
-class Api::V1::ReviewsController < ApplicationController
+class Api::V1::ReviewsController < SecuredController
   def index
     @shop = Shop.find(params[:shop_id])
     @reviews = @shop.reviews
@@ -6,7 +6,7 @@ class Api::V1::ReviewsController < ApplicationController
   end
 
   def create
-    @review = Review.new(review_params)
+    @review = @current_user.reviews.new(review_params)
     if @review.save
       render json: @review, status: :created
     else

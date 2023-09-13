@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Box, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ export default function NewShop() {
     image: yup.string().required('画像を選択して下さい。')
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
   const { user, isAuthenticated, isLoading } = useAuth0()
   const router = useRouter();
   const { shopId } = router.query;
@@ -26,7 +26,7 @@ export default function NewShop() {
     } catch (err) {
       alert("登録に失敗しました。")
     };
-    console.log(data.image)
+    console.log(data)
   };
 
   if (isLoading) {
@@ -52,8 +52,8 @@ export default function NewShop() {
                 variant="outlined"
                 fullWidth
                 error={ errors.title ? true : false }
-                helperText={ errors.title?.message }
               />
+              <div className="mt-2 text-xs text-red-600">{ errors.title?.message }</div>
             </Box>
             <Box mb={2}>
               <TextField
@@ -64,41 +64,55 @@ export default function NewShop() {
                 multiline
                 rows={4}
                 error={ errors.caption ? true : false }
-                helperText={ errors.caption?.message }
               />
+              <div className="mt-2 text-xs text-red-600">{ errors.caption?.message }</div>
             </Box>
             <Box mb={2}>
-              <FormControl sx={{ minWidth: 120 }} size="small">
-                <InputLabel id="score">スコア</InputLabel>
-                <Select
-                  { ...register('score') }
-                  labelId="score"
-                  id="demo-select-small"
-                  label="score"
-                  error={ errors.score ? true : false }
-                  helperText={ errors.score?.message }
-                >
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                </Select>
-              </FormControl>
+              <Controller
+                control={control}
+                name="score"
+                defaultValue=""
+                render={({ field }) => (
+                  <FormControl sx={{ minWidth: 120 }} size="small">
+                    <InputLabel id="score">スコア</InputLabel>
+                    <Select
+                      { ...field }
+                      labelId="score"
+                      id="demo-select-small"
+                      label="score"
+                      error={ errors.score ? true : false }
+                    >
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              />
+              <div className="mt-2 text-xs text-red-600">{ errors.score?.message }</div>
             </Box>
             <Box mb={2}>
-              <input
-                { ...register('image') }
-                label="画像"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-                error={ errors.image ? true : false }
-                helperText={ errors.image?.message }
-                type="file"
-                accept="image/*"
+              <Controller
+                control={control}
+                name="image"
+                defaultValue=""
+                render={({ field }) => (
+                  <input
+                    { ...field }
+                    label="画像"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={2}
+                    error={ errors.image ? true : false }
+                    type="file"
+                    accept="image/*"
+                  />
+                )}
               />
+              <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
             </Box>
             <input
               { ...register('sub') }
@@ -106,6 +120,13 @@ export default function NewShop() {
               type="hidden"
               name="sub"
               value={user.sub}
+            />
+            <input
+              { ...register('shop_id') }
+              id="shop_id"
+              type="hidden"
+              name="shop_id"
+              value={ shopId }
             />
             <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
               送信

@@ -26,13 +26,14 @@ export default function NewShop() {
       try {
         const accessToken = await getAccessTokenSilently({})
         setToken(accessToken)
-        console.log(token)
       } catch (e) {
         console.log(e.message)
       }
     }
     getToken()
   }, [])
+
+  console.log(token)
 
   async function onSubmit(data) {
     try {

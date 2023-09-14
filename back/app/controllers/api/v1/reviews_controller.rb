@@ -1,4 +1,6 @@
 class Api::V1::ReviewsController < SecuredController
+  skip_before_action :authorize_request, only: [:index,:show]
+
   def index
     @shop = Shop.find(params[:shop_id])
     @reviews = @shop.reviews

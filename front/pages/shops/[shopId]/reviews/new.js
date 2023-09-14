@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState, useEffect } from "react";
 
 export default function NewShop() {
   const schema = yup.object({
@@ -15,18 +16,37 @@ export default function NewShop() {
   });
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
   const router = useRouter();
   const { shopId } = router.query;
+  const [token,setToken] = useState('')
+
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({})
+        setToken(accessToken)
+        console.log(token)
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+    getToken()
+  }, [])
 
   async function onSubmit(data) {
     try {
-      await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, data)
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, data, headers)
       router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
+      console.log()
     };
-    console.log(data)
   };
 
   if (isLoading) {

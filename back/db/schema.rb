@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_13_080450) do
+ActiveRecord::Schema.define(version: 2023_09_11_124022) do
 
   create_table "reviews", force: :cascade do |t|
     t.string "title"
     t.string "image"
     t.text "caption"
     t.integer "score"
-    t.string "sub", null: false
+    t.integer "user_id", null: false
     t.integer "shop_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["shop_id"], name: "index_reviews_on_shop_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -43,11 +44,12 @@ ActiveRecord::Schema.define(version: 2023_09_13_080450) do
     t.text "number_of_seats"
   end
 
-  create_table "users", primary_key: "sub", id: :string, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
+    t.string "sub", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "reviews", "shops"
-  add_foreign_key "reviews", "users", column: "sub", primary_key: "sub"
+  add_foreign_key "reviews", "users"
 end

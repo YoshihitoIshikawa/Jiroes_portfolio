@@ -45,7 +45,7 @@ export default function NewShop() {
       router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
-      console.log()
+      console.log(data)
     };
   };
 
@@ -135,18 +135,11 @@ export default function NewShop() {
               <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
             </Box>
             <input
-              { ...register('sub') }
-              id="sub"
+              { ...register('user_id') }
+              id="user_id"
               type="hidden"
-              name="sub"
+              name="user_id"
               value={user.sub}
-            />
-            <input
-              { ...register('shop_id') }
-              id="shop_id"
-              type="hidden"
-              name="shop_id"
-              value={ shopId }
             />
             <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
               送信

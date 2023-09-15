@@ -8,10 +8,9 @@ export default function App({ Component, pageProps }) {
     <Auth0Provider
       domain={process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}
       clientId={process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}
+      audience={process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}
       authorizationParams={{
         redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
-        audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
-        scope: "read:current_user update:current_user_metadata"
       }}
     >
       <Head>

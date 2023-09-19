@@ -8,6 +8,8 @@ class Api::V1::ReviewsController < SecuredController
   end
 
   def create
+    puts "Image file: #{params[:image].inspect}"
+
     @review = @current_user.reviews.new(review_params)
     if @review.save
       render json: @review, status: :created

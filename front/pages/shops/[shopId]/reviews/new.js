@@ -16,10 +16,11 @@ export default function NewShop() {
   });
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
   const { shopId } = router.query;
   const [token,setToken] = useState('')
+
 
   useEffect(() => {
     const getToken = async () => {
@@ -41,17 +42,23 @@ export default function NewShop() {
     getToken()
   }, [])
 
-  console.log(token)
-
   async function onSubmit(data) {
     try {
       const headers = {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
         }
       }
-      await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, data, headers)
-      router.push("/")
+      const formData = new FormData()
+      const fileInput = document.getElementById('fileInput')
+      formData.append("title", data.title)
+      formData.append("caption", data.caption)
+      formData.append("score", data.score)
+      formData.append("image", fileInput.files[0])
+
+      await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, formData, headers)
+      // router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
       console.log(data)
@@ -73,7 +80,7 @@ export default function NewShop() {
       <div className="flex justify-center mt-20">
         <div className="sm:w-1/2 flex flex-col">
           <h1 className="text-4xl mb-8">レビュー投稿</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
             <Box mb={2}>
               <TextField
                 { ...register('title') }
@@ -130,26 +137,15 @@ export default function NewShop() {
                 render={({ field }) => (
                   <input
                     { ...field }
-                    label="画像"
-                    variant="outlined"
-                    fullWidth
-                    multiline
-                    rows={2}
                     error={ errors.image ? true : false }
                     type="file"
                     accept="image/*"
+                    id="fileInput"
                   />
                 )}
               />
               <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
             </Box>
-            <input
-              { ...register('user_id') }
-              id="user_id"
-              type="hidden"
-              name="user_id"
-              value={user.sub}
-            />
             <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
               送信
             </Button>

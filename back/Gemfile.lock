@@ -213,7 +213,7 @@ DEPENDENCIES
   fog-aws
   jwt
   listen (~> 3.3)
-  mini_magick
+  mini_magick (~> 4.12)
   puma (~> 5.0)
   rack-cors
   rails (~> 6.1.7)

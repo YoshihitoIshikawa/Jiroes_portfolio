@@ -20,5 +20,6 @@ CarrierWave.configure do |config|
     config.cache_storage = :file
     config.store_dir = 'uploads'
     config.enable_processing = false if Rails.env.test?
+    config.asset_host = "http://localhost:3000"
   end
 end

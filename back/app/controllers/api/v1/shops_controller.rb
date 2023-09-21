@@ -1,4 +1,6 @@
-class Api::V1::ShopsController < ApplicationController
+class Api::V1::ShopsController < SecuredController
+  skip_before_action :authorize_request, only: [:index,:show]
+
   def index
     @shops = Shop.all
     render json: @shops

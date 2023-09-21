@@ -7,7 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function NewShop() {
   const schema = yup.object({
-    name: yup.string().required('店舗名は入力必須項目です。')
+    name: yup.string().required('店舗名は入力必須項目です。'),
+    user_id: yup.string().required('※店舗登録にはログインが必要です。')
   });
 
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
@@ -157,6 +158,7 @@ export default function NewShop() {
               rows={4}
             />
           </Box>
+          <p className="mb-2 text-red-600">{ errors.user_id?.message }</p>
           <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
             送信
           </Button>

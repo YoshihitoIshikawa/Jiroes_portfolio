@@ -34,11 +34,21 @@ export default function NewShop() {
         setToken(accessToken)
       } catch (e) {
         console.log(e.message)
+        const accessToken = await getAccessTokenWithPopup({
+          domain: `${process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}`,
+          clientId: `${process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}`,
+          authorizationParams: {
+          audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
+          redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
+          scope: "read:current_user update:current_user_metadata"
+          }
+        })
+        setToken(accessToken)
       }
     }
     getToken()
   }, [])
-
+  console.log(token)
 
   async function onSubmit(data) {
     try {

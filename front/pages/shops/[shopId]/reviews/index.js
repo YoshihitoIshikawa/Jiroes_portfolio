@@ -27,24 +27,37 @@ const indexReviews = ({ reviews }) => {
   const router = useRouter();
   const { shopId } = router.query;
 
-  return(
-    <div className="flex justify-center mt-20">
-      <div className="md:w-1/2 flex flex-col">
-        <h2 className="text-4xl mb-8">レビュー一覧</h2>
-        {reviews.map((review) => (
-          <Box className="m-4 flex" key={review.id}>
-            <div className="mr-10">
-              <img src={review.image.thumb.url} alt="reviewImage" className="rounded-lg" width={200} height={200} />
-            </div>
-            <div>
-              <Link className="text-xl" href={`/shops/${shopId}/reviews/${review.id}`}>{review.title}</Link>
-              <p className="text-lg mt-4">評価：{ review.score } / 5</p>
-            </div>
-          </Box>
-        ))}
+  if (reviews.length == 0 ) {
+    return(
+      <div className="flex justify-center mt-20">
+        <div className="md:w-1/2 flex flex-col">
+          <h2 className="text-4xl mb-12">レビュー一覧</h2>
+          <p className='text-2xl mb-8'>まだレビューがありません。</p>
+          <Link className="text-xl" href={`/shops/${shopId}/reviews/new`}>⇨レビューを投稿する。</Link>
+        </div>
       </div>
-    </div>
     )
+  } else {
+    return(
+      <div className="flex justify-center mt-20">
+        <div className="md:w-1/2 flex flex-col">
+          <h2 className="text-4xl mb-12">レビュー一覧</h2>
+          {reviews.map((review) => (
+            <Box className="m-4 flex" key={review.id}>
+              <div className="mr-10">
+                <img src={review.image.thumb.url} alt="reviewImage" className="rounded-lg" width={200} height={200} />
+              </div>
+              <div>
+                <Link className="text-xl" href={`/shops/${shopId}/reviews/${review.id}`}>{review.title}</Link>
+                <p className="text-lg mt-4">評価：{ review.score } / 5</p>
+              </div>
+            </Box>
+          ))}
+        </div>
+      </div>
+      )
+  }
+
 };
 
 export default indexReviews;

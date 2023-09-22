@@ -91,7 +91,7 @@ export default function NewReview() {
       <div className="flex justify-center mt-20">
         <div className="sm:w-1/2 flex flex-col">
           <h1 className="text-4xl mb-8">レビュー投稿</h1>
-          <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+          <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <Box mb={2}>
               <TextField
                 { ...register('title') }

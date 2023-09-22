@@ -77,7 +77,7 @@ export default function ShopPage({ review }) {
                   </tr>
                   <tr className="border-b dark:border-neutral-500">
                     <th className="whitespace-nowrap px-6 py-4">
-                      説明
+                      内容
                     </th>
                     <td className="whitespace-pre-wrap px-6 py-4">
                       { review.caption }

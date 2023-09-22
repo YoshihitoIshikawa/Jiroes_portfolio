@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
+import LoginButton from "@/components/logInButton";
 
 export default function NewShop() {
   const schema = yup.object({
@@ -16,7 +17,7 @@ export default function NewShop() {
   });
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
+  const { isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
   const { shopId } = router.query;
   const [token,setToken] = useState('')
@@ -58,7 +59,7 @@ export default function NewShop() {
       formData.append("image", fileInput.files[0])
 
       await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, formData, headers)
-      // router.push("/")
+      router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
       console.log(data)
@@ -110,7 +111,7 @@ export default function NewShop() {
                 defaultValue=""
                 render={({ field }) => (
                   <FormControl sx={{ minWidth: 120 }} size="small">
-                    <InputLabel id="score">スコア</InputLabel>
+                    <InputLabel id="score">評価</InputLabel>
                     <Select
                       { ...field }
                       labelId="score"
@@ -150,6 +151,15 @@ export default function NewShop() {
               送信
             </Button>
           </form>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="flex justify-center mt-20">
+        <div className="sm:w-1/2 flex flex-col">
+          <div className="mb-8 text-2xl">レビュー投稿をするにはログインが必要です。</div>
+          <LoginButton/>
         </div>
       </div>
     )

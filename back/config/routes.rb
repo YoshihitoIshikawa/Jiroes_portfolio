@@ -1,7 +1,18 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :shops, only: [:index, :create, :show, :update, :destroy]
+      namespace :users do
+        get 'current/index'
+      end
+    end
+  end
+  get 'users/index'
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index, :create]
+      resources :shops, only: [:index, :create, :show, :update, :destroy] do
+        resources :reviews, only: [:index, :create, :show, :update, :destroy]
+      end
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

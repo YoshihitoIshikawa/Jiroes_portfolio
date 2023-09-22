@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getStaticProps({ params }) {
-  const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.id}`);
+  const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}`);
   const shop = res.data;
   return {
     props: {shop: shop}
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   const shops = await res.data;
 
   const paths = shops.map((shop) => ({
-    params: { id: shop.id.toString() },
+    params: { shopId: shop.id.toString() },
   }))
   return {
     paths,
@@ -75,6 +75,14 @@ export default function ShopPage({ shop }) {
                     </th>
                     <td className="whitespace-pre-wrap px-6 py-4">
                       { shop.phone_number }
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:border-neutral-500">
+                    <th className="whitespace-nowrap px-6 py-4">
+                      座席数
+                    </th>
+                    <td className="whitespace-pre-wrap px-6 py-4">
+                      { shop.number_of_seats }
                     </td>
                   </tr>
                   <tr className="border-b dark:border-neutral-500">

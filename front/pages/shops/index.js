@@ -11,7 +11,6 @@ export async function getStaticProps() {
 }
 
 export default function IndexShops({shops}) {
-  console.log(shops)
   return(
     <div className="flex justify-center mt-20">
       <div className="sm:w-1/2 flex flex-col">

@@ -1,4 +1,6 @@
-class Api::V1::ShopsController < ApplicationController
+class Api::V1::ShopsController < SecuredController
+  skip_before_action :authorize_request, only: [:index,:show]
+
   def index
     @shops = Shop.all
     render json: @shops
@@ -34,6 +36,6 @@ class Api::V1::ShopsController < ApplicationController
 
   private
   def shop_params
-    params.permit(:name, :address, :phone_number, :access, :parking, :open_time, :menu, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
+    params.permit(:name, :address, :phone_number, :access, :parking, :number_of_seats, :open_time, :menu, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
   end
 end

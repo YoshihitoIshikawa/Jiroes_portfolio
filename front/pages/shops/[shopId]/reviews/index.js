@@ -1,6 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from 'next/router';
-import LoginButton from "@/components/logInButton";
 import axios from "axios";
 import Link from "next/link";
 import { Box } from "@mui/material";
@@ -26,47 +24,27 @@ export async function getStaticPaths() {
 }
 
 const indexReviews = ({ reviews }) => {
-  const { user, isLoading, isAuthenticated } = useAuth0();
   const router = useRouter();
   const { shopId } = router.query;
-  console.log(shopId)
-  if (isLoading) {
-    return (
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h2 className="text-4xl">Loading...</h2>
-        </div>
-      </div>
-    )
-  }
 
-  if (isAuthenticated) {
-    return(
-      <div className="flex justify-center mt-20">
-        <div className="md:w-1/2 flex flex-col">
-          <h2 className="text-4xl mb-8">レビュー</h2>
-          {reviews.map((review) => (
-            <Box className="m-4 flex" key={review.id}>
-              <div className="mr-10">
-                <img src={review.image.thumb.url} alt="reviewImage" className="rounded-lg" width={200} height={200} />
-              </div>
-              <div>
-                <Link className="text-xl" href={`/shops/${shopId}/reviews/${review.id}`}>{review.title}</Link>
-                <p className="text-lg mt-4">評価：{ review.score }</p>
-              </div>
-            </Box>
-          ))}
-        </div>
+  return(
+    <div className="flex justify-center mt-20">
+      <div className="md:w-1/2 flex flex-col">
+        <h2 className="text-4xl mb-8">レビュー一覧</h2>
+        {reviews.map((review) => (
+          <Box className="m-4 flex" key={review.id}>
+            <div className="mr-10">
+              <img src={review.image.thumb.url} alt="reviewImage" className="rounded-lg" width={200} height={200} />
+            </div>
+            <div>
+              <Link className="text-xl" href={`/shops/${shopId}/reviews/${review.id}`}>{review.title}</Link>
+              <p className="text-lg mt-4">評価：{ review.score } / 5</p>
+            </div>
+          </Box>
+        ))}
       </div>
-      )
-  } else {
-    return(
-      <div>
-        <h1>ログインして下さい。</h1>
-        <LoginButton/>
-      </div>
+    </div>
     )
-  }
 };
 
 export default indexReviews;

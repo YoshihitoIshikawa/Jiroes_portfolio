@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export async function getStaticProps({ params }) {
   const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}/reviews/${params.reviewId}`);
@@ -36,6 +37,8 @@ export async function getStaticPaths() {
 }
 
 export default function ShopPage({ review }) {
+  const router = useRouter()
+  const ids = router.query
 
   return(
     <div className="flex justify-center mt-20">
@@ -46,7 +49,7 @@ export default function ShopPage({ review }) {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-hidden mb-20">
-              <table className="min-w-full text-left md:text-lg font-light">
+              <table className="min-w-full text-left md:text-lg font-light mb-4">
                 <tbody>
                   <tr className="border-b dark:border-neutral-500">
                     <th className="whitespace-nowrap px-6 py-4">
@@ -69,12 +72,12 @@ export default function ShopPage({ review }) {
                       評価
                     </th>
                     <td className="whitespace-pre-wrap px-6 py-4">
-                      { review.score }
+                      { review.score } / 5
                     </td>
                   </tr>
                   <tr className="border-b dark:border-neutral-500">
                     <th className="whitespace-nowrap px-6 py-4">
-                      内容
+                      説明
                     </th>
                     <td className="whitespace-pre-wrap px-6 py-4">
                       { review.caption }
@@ -82,6 +85,7 @@ export default function ShopPage({ review }) {
                   </tr>
                 </tbody>
               </table>
+              <Link className="text-xl" href={`/shops/${ids.shopId}/reviews/`}>⇦レビュー一覧に戻る</Link>
             </div>
           </div>
         </div>

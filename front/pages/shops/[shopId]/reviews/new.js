@@ -8,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import LoginButton from "@/components/logInButton";
 
-export default function NewShop() {
+export default function NewReview() {
   const schema = yup.object({
     title: yup.string().required('入力必須項目です。'),
     score: yup.string().required('入力必須項目です。'),

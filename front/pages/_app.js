@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import Head from 'next/head';
 import { Auth0Provider } from '@auth0/auth0-react';
+import Layout from '@/components/layout';
 
 
 export default function App({ Component, pageProps }) {
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </Auth0Provider>
   )
 }

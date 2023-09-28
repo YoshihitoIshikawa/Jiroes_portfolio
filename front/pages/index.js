@@ -1,18 +1,17 @@
-import { Inter } from 'next/font/google';
 import LoginButton from '@/components/logInButton';
 import LogoutButton from '@/components/logOutButton';
-
-
-
-const inter = Inter({ subsets: ['latin'] })
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
-      <div className="z-10 max-w-5xl w-full font-mono text-sm lg:flex">
-        <LoginButton/>
-        <LogoutButton/>
+    <div className='fixed w-screen h-screen bg-yellow-200 -z-50'>
+      <div className="flex justify-center mt-20">
+        <div className="sm:w-1/2 flex flex-col">
+          <div>
+            hello world!
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   )
 }

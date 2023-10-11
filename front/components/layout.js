@@ -4,8 +4,8 @@ export default function Layout({ children }) {
   return (
     <>
       <PrimarySearchAppBar />
-      <div className="fixed w-screen h-screen bg-yellow-200 -z-50">
-        <main>{children}</main>
+      <div className="bg-yellow-200 -z-50 min-h-screen">
+        <main className="pt-20 flex justify-center">{children}</main>
         {/* <Footer /> */}
       </div>
     </>

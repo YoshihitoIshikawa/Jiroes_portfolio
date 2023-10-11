@@ -41,52 +41,50 @@ export default function ShopPage({ review }) {
   const ids = router.query
 
   return(
-    <div className="flex justify-center mt-20">
-      <div className="sm:w-1/2 flex flex-col">
-        <div className="text-lg md:text-4xl px-6 py-4">
-          レビュー
-        </div>
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-hidden mb-20">
-              <table className="min-w-full text-left md:text-lg font-light mb-4">
-                <tbody>
-                  <tr className="border-b dark:border-neutral-500">
-                    <th className="whitespace-nowrap px-6 py-4">
-                      画像
-                    </th>
-                    <td className="whitespace-pre-wrap px-6 py-4">
-                      <img src={ review.image.url } alt="reviewImage" className="rounded-lg" width={500} height={500} />
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500">
-                    <th className="whitespace-nowrap px-6 py-4">
-                      商品名
-                    </th>
-                    <td className="whitespace-pre-wrap px-6 py-4">
-                      { review.title }
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500">
-                    <th className="whitespace-nowrap px-6 py-4">
-                      評価
-                    </th>
-                    <td className="whitespace-pre-wrap px-6 py-4">
-                      { review.score } / 5
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500">
-                    <th className="whitespace-nowrap px-6 py-4">
-                      内容
-                    </th>
-                    <td className="whitespace-pre-wrap px-6 py-4">
-                      { review.caption }
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <Link className="text-xl" href={`/shops/${ids.shopId}/reviews/`}>⇦レビュー一覧に戻る</Link>
-            </div>
+    <div className="sm:w-1/2 flex flex-col">
+      <div className="text-lg md:text-4xl px-6 py-4">
+        レビュー
+      </div>
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+          <div className="overflow-hidden mb-20">
+            <table className="min-w-full text-left md:text-lg font-light mb-4">
+              <tbody>
+                <tr className="border-b dark:border-neutral-500">
+                  <th className="whitespace-nowrap px-6 py-4">
+                    画像
+                  </th>
+                  <td className="whitespace-pre-wrap px-6 py-4">
+                    <img src={ review.image.url } alt="reviewImage" className="rounded-lg" width={500} height={500} />
+                  </td>
+                </tr>
+                <tr className="border-b dark:border-neutral-500">
+                  <th className="whitespace-nowrap px-6 py-4">
+                    商品名
+                  </th>
+                  <td className="whitespace-pre-wrap px-6 py-4">
+                    { review.title }
+                  </td>
+                </tr>
+                <tr className="border-b dark:border-neutral-500">
+                  <th className="whitespace-nowrap px-6 py-4">
+                    評価
+                  </th>
+                  <td className="whitespace-pre-wrap px-6 py-4">
+                    { review.score } / 5
+                  </td>
+                </tr>
+                <tr className="border-b dark:border-neutral-500">
+                  <th className="whitespace-nowrap px-6 py-4">
+                    内容
+                  </th>
+                  <td className="whitespace-pre-wrap px-6 py-4">
+                    { review.caption }
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <Link className="text-xl" href={`/shops/${ids.shopId}/reviews/`}>⇦レビュー一覧に戻る</Link>
           </div>
         </div>
       </div>

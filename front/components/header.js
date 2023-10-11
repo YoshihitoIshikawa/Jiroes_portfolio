@@ -6,14 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import Link from 'next/link';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -58,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const { loginWithRedirect } = useAuth0()
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0()
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -101,7 +98,8 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
     </Menu>
   );
 
@@ -122,38 +120,9 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
     </Menu>
   );
 
@@ -161,9 +130,10 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#212121" }}>
         <Toolbar>
+          <RamenDiningIcon className='mr-2'/>
           <Typography
             variant="h6"
-            className='mr-2'
+            className='mr-3 font-black'
             component="div"
             sx={{ display: {sm: 'block' } }}
           >
@@ -179,37 +149,40 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <div className='flex items-center'>
-              <div>
-                <p className="cursor-pointer" onClick={() => loginWithRedirect()}>ログイン</p>
-              </div>
+          { isAuthenticated ?
+            <>
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+            </Box>
+          </> :
+          <div className='flex items-center'>
+            <div>
+              <p className="cursor-pointer text-xs md:text-base whitespace-nowrap" onClick={() => loginWithRedirect()}>ログイン</p>
             </div>
-
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
+          </div>
+          }
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

@@ -137,7 +137,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: {sm: 'block' } }}
           >
-            JIROES
+            <Link href="/">JIROES</Link>
           </Typography>
           <Search>
             <SearchIconWrapper>

@@ -128,7 +128,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: "#212121" }}>
+      <AppBar position="static" className='bg-zinc-800'>
         <Toolbar>
           <RamenDiningIcon className='mr-2'/>
           <Typography

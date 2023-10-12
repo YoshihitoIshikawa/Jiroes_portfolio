@@ -66,10 +66,8 @@ export default function NewShop() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center pt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h2 className="text-4xl">Loading...</h2>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <h2 className="text-4xl">Loading...</h2>
       </div>
     )
   }
@@ -210,7 +208,7 @@ export default function NewShop() {
             />
           </Box>
           <p className="mb-2 text-red-600">{ errors.user_id?.message }</p>
-          <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
+          <Button sx={{width: 100}} variant="outlined" type="submit">
             送信
           </Button>
         </form>

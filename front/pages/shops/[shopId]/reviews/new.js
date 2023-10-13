@@ -78,99 +78,93 @@ export default function NewReview() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h2 className="text-4xl">Loading...</h2>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <h2 className="text-4xl">Loading...</h2>
       </div>
     )
   }
 
   if (isAuthenticated) {
     return(
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h1 className="text-4xl mb-8">レビュー投稿</h1>
-          <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            <Box mb={2}>
-              <TextField
-                { ...register('title') }
-                label="商品名"
-                variant="outlined"
-                fullWidth
-                error={ errors.title ? true : false }
-              />
-              <div className="mt-2 text-xs text-red-600">{ errors.title?.message }</div>
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('caption') }
-                label="内容"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-                error={ errors.caption ? true : false }
-              />
-              <div className="mt-2 text-xs text-red-600">{ errors.caption?.message }</div>
-            </Box>
-            <Box mb={2}>
-              <Controller
-                control={control}
-                name="score"
-                defaultValue=""
-                render={({ field }) => (
-                  <FormControl sx={{ minWidth: 120 }} size="small">
-                    <InputLabel id="score">評価</InputLabel>
-                    <Select
-                      { ...field }
-                      labelId="score"
-                      id="demo-select-small"
-                      label="score"
-                      error={ errors.score ? true : false }
-                    >
-                      <MenuItem value={5}>5</MenuItem>
-                      <MenuItem value={4}>4</MenuItem>
-                      <MenuItem value={3}>3</MenuItem>
-                      <MenuItem value={2}>2</MenuItem>
-                      <MenuItem value={1}>1</MenuItem>
-                    </Select>
-                  </FormControl>
-                )}
-              />
-              <div className="mt-2 text-xs text-red-600">{ errors.score?.message }</div>
-            </Box>
-            <Box mb={2}>
-              <Controller
-                control={control}
-                name="image"
-                defaultValue=""
-                render={({ field }) => (
-                  <input
+      <div className="sm:w-1/2 flex flex-col">
+        <h1 className="text-4xl mb-8">レビュー投稿</h1>
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <Box mb={2}>
+            <TextField
+              { ...register('title') }
+              label="商品名"
+              variant="outlined"
+              fullWidth
+              error={ errors.title ? true : false }
+            />
+            <div className="mt-2 text-xs text-red-600">{ errors.title?.message }</div>
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('caption') }
+              label="内容"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              error={ errors.caption ? true : false }
+            />
+            <div className="mt-2 text-xs text-red-600">{ errors.caption?.message }</div>
+          </Box>
+          <Box mb={2}>
+            <Controller
+              control={control}
+              name="score"
+              defaultValue=""
+              render={({ field }) => (
+                <FormControl sx={{ minWidth: 120 }} size="small">
+                  <InputLabel id="score">評価</InputLabel>
+                  <Select
                     { ...field }
-                    error={ errors.image ? true : false }
-                    type="file"
-                    accept="image/*"
-                    id="fileInput"
-                  />
-                )}
-              />
-              <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
-            </Box>
-            <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
-              送信
-            </Button>
-          </form>
-        </div>
+                    labelId="score"
+                    id="demo-select-small"
+                    label="score"
+                    error={ errors.score ? true : false }
+                  >
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            />
+            <div className="mt-2 text-xs text-red-600">{ errors.score?.message }</div>
+          </Box>
+          <Box mb={2}>
+            <Controller
+              control={control}
+              name="image"
+              defaultValue=""
+              render={({ field }) => (
+                <input
+                  { ...field }
+                  error={ errors.image ? true : false }
+                  type="file"
+                  accept="image/*"
+                  id="fileInput"
+                />
+              )}
+            />
+            <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
+          </Box>
+          <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
+            送信
+          </Button>
+        </form>
       </div>
     )
   } else {
     return (
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <div className="mb-8 text-2xl">レビュー投稿をするにはログインが必要です。</div>
-          <LoginButton/>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <div className="mb-8 text-2xl">レビュー投稿をするにはログインが必要です。</div>
+        <LoginButton/>
       </div>
     )
   }

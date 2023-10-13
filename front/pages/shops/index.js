@@ -12,15 +12,13 @@ export async function getStaticProps() {
 
 export default function IndexShops({shops}) {
   return(
-    <div className="flex justify-center mt-20">
-      <div className="sm:w-1/2 flex flex-col">
-        {shops.map((shop) => (
-          <Box className="m-4" key={shop.id}>
-            <Link className="text-xl" href={`/shops/${shop.id}`}>{shop.name}</Link>
-            <p>{ shop.access }</p>
-          </Box>
-        ))}
-      </div>
+    <div className="sm:w-1/2 flex flex-col">
+      {shops.map((shop) => (
+        <Box className="m-4" key={shop.id}>
+          <Link className="text-xl" href={`/shops/${shop.id}`}>{shop.name}</Link>
+          <p>{ shop.access }</p>
+        </Box>
+      ))}
     </div>
   )
 }

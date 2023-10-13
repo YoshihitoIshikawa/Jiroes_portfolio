@@ -66,165 +66,159 @@ export default function NewShop() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h2 className="text-4xl">Loading...</h2>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <h2 className="text-4xl">Loading...</h2>
       </div>
     )
   }
 
   if (isAuthenticated) {
     return(
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <h1 className="text-4xl mb-8">新規店舗登録</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box mb={2}>
-              <TextField
-                { ...register('name') }
-                label="店舗名(必須)"
-                variant="outlined"
-                fullWidth
-                error={ errors.name ? true : false }
-                helperText={ errors.name?.message }
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('address') }
-                label="所在地"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('access') }
-                label="アクセス"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('open_time') }
-                label="営業時間"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('closed_days') }
-                label="定休日"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('phone_number') }
-                label="電話番号"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('number_of_seats') }
-                label="座席数"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('parking') }
-                label="駐車場(有・無・その他詳細)"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={2}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('menu') }
-                label="メニュー"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('when_to_buy_tickets') }
-                label="食券購入(列に並ぶ前・入店時等)"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('call_timing') }
-                label="コール(タイミングや店舗独自の仕方等)"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('prohibited_matters') }
-                label="禁止事項(マシマシ不可・麺固め不可・特定のルール等)"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                { ...register('remarks') }
-                label="備考(店舗特有のルール・留意ポイント等)"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-            </Box>
-            <p className="mb-2 text-red-600">{ errors.user_id?.message }</p>
-            <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
-              送信
-            </Button>
-          </form>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <h1 className="text-4xl mb-8">新規店舗登録</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box mb={2}>
+            <TextField
+              { ...register('name') }
+              label="店舗名(必須)"
+              variant="outlined"
+              fullWidth
+              error={ errors.name ? true : false }
+              helperText={ errors.name?.message }
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('address') }
+              label="所在地"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('access') }
+              label="アクセス"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('open_time') }
+              label="営業時間"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('closed_days') }
+              label="定休日"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('phone_number') }
+              label="電話番号"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('number_of_seats') }
+              label="座席数"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('parking') }
+              label="駐車場(有・無・その他詳細)"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={2}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('menu') }
+              label="メニュー"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('when_to_buy_tickets') }
+              label="食券購入(列に並ぶ前・入店時等)"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('call_timing') }
+              label="コール(タイミングや店舗独自の仕方等)"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('prohibited_matters') }
+              label="禁止事項(マシマシ不可・麺固め不可・特定のルール等)"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              { ...register('remarks') }
+              label="備考(店舗特有のルール・留意ポイント等)"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Box>
+          <p className="mb-2 text-red-600">{ errors.user_id?.message }</p>
+          <Button sx={{width: 100}} variant="outlined" type="submit">
+            送信
+          </Button>
+        </form>
       </div>
     )
   } else {
     return (
-      <div className="flex justify-center mt-20">
-        <div className="sm:w-1/2 flex flex-col">
-          <div className="mb-8 text-2xl">店舗登録をするにはログインが必要です。</div>
-          <LoginButton/>
-        </div>
+      <div className="sm:w-1/2 flex flex-col">
+        <div className="mb-8 text-2xl">店舗登録をするにはログインが必要です。</div>
+        <LoginButton/>
       </div>
     )
   }

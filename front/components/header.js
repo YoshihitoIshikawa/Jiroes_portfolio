@@ -98,8 +98,8 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>店舗一覧</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>登録店舗一覧</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
     </Menu>
   );
@@ -122,8 +122,8 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>店舗一覧</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>登録店舗一覧</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
     </Menu>
   );

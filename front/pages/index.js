@@ -8,7 +8,7 @@ export default function Home() {
         <p className='text-xl'>
           JIROESとは、二郎系ラーメンに特化した口コミアプリです。<br />
           このアプリは<span className='font-bold'>「二郎系ラーメンの美味しさをもっと多くの人に知って欲しい」</span>との想いから生まれました。<br />
-          <span className='font-bold'>「二郎系に挑戦してみたいけどルールがよく分からない」</span>と訪問をためらっている方の為にも、<br />
+          <span className='font-bold'>「二郎系に挑戦してみたいけどルールがよく分からない」</span>と訪問をためらっている方の為に、<br />
           <RamenDiningIcon className='mr-2'/><span className='font-bold text-orange-500'>ラーメン二郎の心得</span><br />
           <RamenDiningIcon className='mr-2'/><span className='font-bold text-orange-500'>店舗毎の、独自のルール・食券購入タイミング・コールの仕方等の情報</span><br />
           を提供し、あなたの<span className='font-bold'>「どうしたらいいかわからない」</span>を解決し二郎系デビューを後押しします！<br />

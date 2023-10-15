@@ -61,7 +61,6 @@ export default function PrimarySearchAppBar() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0()
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   // const [loading, setLoading] = useState(false);
 
@@ -70,14 +69,7 @@ export default function PrimarySearchAppBar() {
   const handleSearch = async () => {
     // setLoading(true);
     try {
-      console.log(searchTerm)
-      const response = await axios.get(`http://localhost:3000/api/v1/shops?search=${searchTerm}`);
-      setSearchResults(response.data);
-      router.push("/searchResults")
-      console.log(searchResults)
-      return {
-        props: {searchResults: searchResults}
-      };
+      router.push(`/search?keyword=${searchTerm}`);
     } catch (error) {
       console.error('検索エラー:', error);
     }
@@ -170,7 +162,7 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <Search>
             <StyledInputBase
-              placeholder="キーワード検索"
+              placeholder="店名・エリア検索"
               inputProps={{ 'aria-label': 'search' }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

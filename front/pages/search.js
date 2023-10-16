@@ -25,7 +25,7 @@ function SearchResults() {
   }, [searchTerm])
 
   return (
-    <div>
+    <div className="sm:w-1/2 flex flex-col">
       {searchResults.map((shop) => (
         <Box className="m-4" key={shop.id}>
           <Link className="text-xl" href={`/shops/${shop.id}`}>{shop.name}</Link>

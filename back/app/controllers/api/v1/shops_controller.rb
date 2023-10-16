@@ -1,5 +1,5 @@
 class Api::V1::ShopsController < SecuredController
-  skip_before_action :authorize_request, only: [:index,:show]
+  skip_before_action :authorize_request, only: [:index, :show, :search]
 
   def index
     @shops = Shop.all
@@ -32,6 +32,15 @@ class Api::V1::ShopsController < SecuredController
   def destroy
     @shop = Shop.find(params[:id])
     @shop.destroy
+  end
+
+  def search
+    if params[:search].present?
+      @shops = Shop.where('name LIKE ? OR address LIKE ? OR access LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      @shops = Shop.all
+    end
+    render json: @shops
   end
 
   private

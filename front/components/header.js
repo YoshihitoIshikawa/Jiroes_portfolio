@@ -13,6 +13,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import Link from 'next/link';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -45,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(0)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -56,6 +59,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0()
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const handleSearch = async () => {
+    // setLoading(true);
+    try {
+      router.push(`/search?keyword=${searchTerm}`);
+    } catch (error) {
+      console.error('検索エラー:', error);
+    }
+    // setLoading(false);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -142,14 +161,14 @@ export default function PrimarySearchAppBar() {
             <Link href="/">JIROES</Link>
           </Typography>
           <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
             <StyledInputBase
-              placeholder="店名やエリアで検索"
+              placeholder="店名・エリア検索"
               inputProps={{ 'aria-label': 'search' }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Search>
+          <SearchIcon className='cursor-pointer' onClick={handleSearch}/>
           <Box sx={{ flexGrow: 1 }} />
           { isAuthenticated ?
             <>

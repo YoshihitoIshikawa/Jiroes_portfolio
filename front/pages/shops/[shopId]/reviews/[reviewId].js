@@ -84,7 +84,6 @@ export default function ShopPage({ review }) {
                 </tr>
               </tbody>
             </table>
-            <Link className="text-xl" href={`/shops/${ids.shopId}/reviews/`}>⇦レビュー一覧に戻る</Link>
           </div>
         </div>
       </div>

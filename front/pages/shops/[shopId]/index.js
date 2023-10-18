@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import CreateIcon from '@mui/icons-material/Create';
 import { Button } from "@mui/material";
+import moment from "moment";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -102,6 +103,7 @@ export default function ShopPage({ shop, reviews }) {
                 <div>
                   <Link className="text-xl" href={`/shops/${shopId}/reviews/${review.id}`}>{review.title}</Link>
                   <p className="text-lg mt-4">評価：{ review.score } / 5</p>
+                  <p className="text-lg mt-4">投稿日：{ moment(review.created_at).format('YYYY-MM-DD') }</p>
                 </div>
               </Box>
             ))}

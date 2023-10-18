@@ -38,16 +38,19 @@ export default function NewReview() {
         setToken(accessToken)
       } catch (e) {
         console.log(e.message)
-        const accessToken = await getAccessTokenWithPopup({
-          domain: `${process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}`,
-          clientId: `${process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}`,
-          authorizationParams: {
-          audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
-          redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
-          scope: "read:current_user update:current_user_metadata"
-          }
-        })
-        setToken(accessToken)
+        if (isAuthenticated) {
+          const accessToken = await getAccessTokenWithPopup({
+            domain: `${process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}`,
+            clientId: `${process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}`,
+            authorizationParams: {
+            audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
+            redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
+            scope: "read:current_user update:current_user_metadata"
+            }
+          })
+          setToken(accessToken)
+        }
+
       }
     }
     getToken()
@@ -164,7 +167,6 @@ export default function NewReview() {
     return (
       <div className="sm:w-1/2 flex flex-col">
         <div className="mb-8 text-2xl">レビュー投稿をするにはログインが必要です。</div>
-        <LoginButton/>
       </div>
     )
   }

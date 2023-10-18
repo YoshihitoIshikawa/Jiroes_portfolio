@@ -43,8 +43,8 @@ export default function ShopPage({ review }) {
   const router = useRouter()
   const ids = router.query
 
-  const { user, isLoading, isAuthenticated } = useAuth0()
-  console.log(user)
+  const { user, isLoading } = useAuth0()
+
   if (isLoading) {
     return (
       <div className="sm:w-1/2 flex flex-col">
@@ -89,7 +89,7 @@ export default function ShopPage({ review }) {
                 </tr>
               </tbody>
             </table>
-            { user.user_id == review.user_id ?
+            { user.sub == review.sub ?
             <Link href={`/shops/${ids.shopId}/reviews/${ids.reviewId}/edit`}>
             <Button variant="outlined">
               <CreateIcon/>編集

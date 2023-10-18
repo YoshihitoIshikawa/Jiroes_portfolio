@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  self.primary_key = :sub
+
   has_many :reviews
 
   def self.from_token_payload(payload)

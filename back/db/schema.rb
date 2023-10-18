@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2023_09_11_111331) do
     t.text "caption"
     t.integer "score"
     t.string "sub", null: false
+    t.integer "user_id", null: false
     t.integer "shop_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -16,7 +16,7 @@ export default function NewReview() {
   });
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
-  const { isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
   const { shopId } = router.query;
   const [token,setToken] = useState('')
@@ -69,6 +69,7 @@ export default function NewReview() {
       formData.append("caption", data.caption)
       formData.append("score", data.score)
       formData.append("image", fileInput.files[0])
+      formData.append("sub", user.sub)
 
       await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, formData, headers)
       router.push("/")
@@ -156,6 +157,7 @@ export default function NewReview() {
             />
             <div className="mt-2 text-xs text-red-600">{ errors.image?.message }</div>
           </Box>
+          <input type="hidden" name="sub" value={ user.sub } />
           <Button sx={{width: 100, marginBottom: 10}} variant="outlined" type="submit">
             送信
           </Button>

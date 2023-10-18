@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import CreateIcon from '@mui/icons-material/Create';
+import { Button } from "@mui/material";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -89,6 +91,9 @@ export default function ShopPage({ shop, reviews }) {
         <CustomTabPanel value={value} index={0}>
           {reviews.length != 0 ?
           <div className="flex flex-col">
+            <Link className="text-xl" href={`/shops/${shopId}/reviews/new`}>
+              <Button variant="outlined"><CreateIcon/>レビュー投稿</Button>
+            </Link>
             {reviews.map((review) => (
               <Box className="m-4 flex" key={review.id}>
                 <div className="mr-10">

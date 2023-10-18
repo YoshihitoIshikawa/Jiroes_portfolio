@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
-import LoginButton from "@/components/logInButton";
 
 export default function NewReview() {
   const schema = yup.object({

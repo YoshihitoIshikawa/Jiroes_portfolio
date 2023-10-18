@@ -34,7 +34,11 @@ class Api::V1::ReviewsController < SecuredController
 
   def destroy
     @review = Review.find(params[:id])
-    @review.destroy
+    if @review.destroy
+      render json: @review
+    else
+      render json: @review.errors, status: :unprocessable_entity
+    end
   end
 
   private

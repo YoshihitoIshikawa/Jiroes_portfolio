@@ -23,10 +23,14 @@ class Api::V1::ReviewsController < SecuredController
 
   def update
     @review = Review.find(params[:id])
-    if @review.update(review_params)
-      render json: @review
+    if @review.user == @current_user
+      if @review.update(review_params)
+        render json: @review
+      else
+        render json: @review.errors, status: :unprocessable_entity
+      end
     else
-      render json: @review.errors, status: :unprocessable_entity
+      render json: { error: "You are not authorized to update this review." }, status: :unauthorized
     end
   end
 

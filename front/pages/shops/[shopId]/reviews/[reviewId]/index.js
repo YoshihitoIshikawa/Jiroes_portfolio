@@ -6,6 +6,11 @@ import { Button } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export async function getStaticProps({ params }) {
   const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}/reviews/${params.reviewId}`);
@@ -45,7 +50,37 @@ export default function ShopPage({ review }) {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
   const { shopId, reviewId } = router.query;
-  const [token,setToken] = useState('')
+  const [token, setToken] = useState('')
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    handleClickOpen();
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      await axios.delete(`http://localhost:3000/api/v1/shops/${shopId}/reviews/${reviewId}`, headers);
+      router.push(`/shops/${shopId}/reviews`);
+      handleClose();
+    } catch (error) {
+      console.error("削除中にエラーが発生しました:", error);
+    }
+  };
 
   useEffect(() => {
     const getToken = async () => {
@@ -78,23 +113,6 @@ export default function ShopPage({ review }) {
     }
     getToken()
   }, [])
-
-  const handleDelete = async () => {
-  if (window.confirm("本当にこのレビューを削除しますか？")) {
-    try {
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      await axios.delete(`http://localhost:3000/api/v1/shops/${shopId}/reviews/${reviewId}`, headers);
-      router.push(`/shops/${shopId}/reviews`);
-    } catch (error) {
-      console.error("削除中にエラーが発生しました:", error);
-    }
-  }
-};
 
   if (isLoading) {
     return (
@@ -151,6 +169,20 @@ export default function ShopPage({ review }) {
                 <Button variant="outlined" onClick={handleDelete}>
                   <DeleteIcon/>削除
                 </Button>
+                <Dialog open={open} onClose={handleClose}>
+                  <DialogTitle>確認</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>本当に削除しますか？</DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                      キャンセル
+                    </Button>
+                    <Button onClick={confirmDelete} color="primary">
+                      削除
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div> :
               <div></div>
               }

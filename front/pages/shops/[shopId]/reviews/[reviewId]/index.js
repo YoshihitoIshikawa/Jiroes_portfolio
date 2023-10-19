@@ -4,6 +4,8 @@ import Link from "next/link";
 import CreateIcon from '@mui/icons-material/Create';
 import { Button } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export async function getStaticProps({ params }) {
   const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}/reviews/${params.reviewId}`);
@@ -40,10 +42,59 @@ export async function getStaticPaths() {
 }
 
 export default function ShopPage({ review }) {
-  const router = useRouter()
-  const ids = router.query
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
+  const router = useRouter();
+  const { shopId, reviewId } = router.query;
+  const [token,setToken] = useState('')
 
-  const { user, isLoading, isAuthenticated } = useAuth0()
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({
+          domain: `${process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}`,
+          clientId: `${process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}`,
+          authorizationParams: {
+          audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
+          redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
+          scope: "read:current_user update:current_user_metadata"
+          }
+        })
+        setToken(accessToken)
+      } catch (e) {
+        console.log(e.message)
+        if (isAuthenticated) {
+          const accessToken = await getAccessTokenWithPopup({
+            domain: `${process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]}`,
+            clientId: `${process.env["NEXT_PUBLIC_AUTH0_CLIENT_ID"]}`,
+            authorizationParams: {
+            audience: `${process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]}`,
+            redirect_uri: `${process.env["NEXT_PUBLIC_BASE_URL"]}`,
+            scope: "read:current_user update:current_user_metadata"
+            }
+          })
+          setToken(accessToken)
+        }
+      }
+    }
+    getToken()
+  }, [])
+
+  const handleDelete = async () => {
+  if (window.confirm("本当にこのレビューを削除しますか？")) {
+    try {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      await axios.delete(`http://localhost:3000/api/v1/shops/${shopId}/reviews/${reviewId}`, headers);
+      router.push(`/shops/${shopId}/reviews`);
+    } catch (error) {
+      console.error("削除中にエラーが発生しました:", error);
+    }
+  }
+};
 
   if (isLoading) {
     return (
@@ -56,7 +107,7 @@ export default function ShopPage({ review }) {
   if (isAuthenticated) {
     return(
       <div className="sm:w-1/2 flex flex-col">
-        <div className="text-lg md:text-4xl px-6 py-4">
+        <div className="text-2xl md:text-4xl px-6 py-4">
           { review.title }
         </div>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -91,11 +142,16 @@ export default function ShopPage({ review }) {
                 </tbody>
               </table>
               { user.sub == review.sub ?
-              <Link href={`/shops/${ids.shopId}/reviews/${ids.reviewId}/edit`}>
-              <Button variant="outlined">
-                <CreateIcon/>編集
-              </Button>
-              </Link> :
+              <div>
+                <Link className="mr-4" href={`/shops/${shopId}/reviews/${reviewId}/edit`}>
+                  <Button variant="outlined">
+                    <CreateIcon/>編集
+                  </Button>
+                </Link>
+                <Button variant="outlined" onClick={handleDelete}>
+                  <DeleteIcon/>削除
+                </Button>
+              </div> :
               <div></div>
               }
             </div>

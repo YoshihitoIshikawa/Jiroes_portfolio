@@ -84,7 +84,6 @@ export default function EditReview({ review }) {
           })
           setToken(accessToken)
         }
-
       }
     }
     getToken()

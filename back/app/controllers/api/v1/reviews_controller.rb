@@ -8,9 +8,7 @@ class Api::V1::ReviewsController < SecuredController
   end
 
   def create
-    puts "Image file: #{params[:image].inspect}"
-
-    @review = @current_user.reviews.new(review_params)
+    @review = Review.new(review_params)
     if @review.save
       render json: @review, status: :created
     else
@@ -34,11 +32,15 @@ class Api::V1::ReviewsController < SecuredController
 
   def destroy
     @review = Review.find(params[:id])
-    @review.destroy
+    if @review.destroy
+      render json: @review
+    else
+      render json: @review.errors, status: :unprocessable_entity
+    end
   end
 
   private
   def review_params
-    params.permit(:title, :caption, :image, :score, :user_id, :shop_id)
+    params.permit(:title, :caption, :image, :score, :sub, :shop_id)
   end
 end

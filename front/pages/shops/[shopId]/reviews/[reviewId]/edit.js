@@ -1,13 +1,48 @@
-import { useForm, Controller } from "react-hook-form";
-import { Box, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { useForm, Controller } from "react-hook-form";
+import { Box, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 
-export default function NewReview() {
+export async function getStaticProps({ params }) {
+  const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}/reviews/${params.reviewId}`);
+  const review = res.data;
+  return {
+    props: {review: review}
+  };
+}
+
+export async function getStaticPaths() {
+  const shopRes = await axios.get(`http://localhost:3000/api/v1/shops`);
+  const shops = await shopRes.data;
+
+  const shopPaths = shops.map((shop) => ({
+    params: { shopId: shop.id.toString() },
+  }))
+
+  const paths = [];
+
+  for (const shopPath of shopPaths) {
+    const reviewRes = await axios.get(`http://localhost:3000/api/v1/shops/${shopPath.params.shopId}/reviews`);
+    const reviews = await reviewRes.data;
+
+    const reviewPaths = reviews.map((review) => ({
+      params: { shopId: shopPath.params.shopId, reviewId: review.id.toString() },
+    }));
+
+    paths.push(...reviewPaths);
+  }
+  return {
+    paths,
+    fallback: true,
+  }
+}
+
+export default function EditReview({ review }) {
   const schema = yup.object({
     title: yup.string().required('入力必須項目です。'),
     score: yup.string().required('入力必須項目です。'),
@@ -18,7 +53,7 @@ export default function NewReview() {
   const { register, handleSubmit, formState: { errors }, control } = useForm({ resolver: yupResolver(schema) });
   const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
-  const { shopId } = router.query;
+  const { shopId, reviewId } = router.query;
   const [token,setToken] = useState('')
 
 
@@ -49,7 +84,6 @@ export default function NewReview() {
           })
           setToken(accessToken)
         }
-
       }
     }
     getToken()
@@ -71,7 +105,7 @@ export default function NewReview() {
       formData.append("image", fileInput.files[0])
       formData.append("sub", user.sub)
 
-      await axios.post(`http://localhost:3000/api/v1/shops/${shopId}/reviews`, formData, headers)
+      await axios.patch(`http://localhost:3000/api/v1/shops/${shopId}/reviews/${reviewId}`, formData, headers)
       router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
@@ -95,6 +129,7 @@ export default function NewReview() {
           <Box mb={2}>
             <TextField
               { ...register('title') }
+              defaultValue={ review.title }
               label="商品名"
               variant="outlined"
               fullWidth
@@ -105,6 +140,7 @@ export default function NewReview() {
           <Box mb={2}>
             <TextField
               { ...register('caption') }
+              defaultValue={ review.caption }
               label="内容"
               variant="outlined"
               fullWidth
@@ -118,7 +154,7 @@ export default function NewReview() {
             <Controller
               control={control}
               name="score"
-              defaultValue=""
+              defaultValue={ review.score }
               render={({ field }) => (
                 <FormControl sx={{ minWidth: 120 }} size="small">
                   <InputLabel id="score">評価</InputLabel>

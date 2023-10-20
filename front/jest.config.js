@@ -3,4 +3,5 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   testEnvironment: "jsdom",
+  setupFilesAfterEnv: ['@testing-library/jest-dom'],
 };

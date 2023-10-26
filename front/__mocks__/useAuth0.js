@@ -1,12 +1,11 @@
-const mockUser = {
-  email: 'apple@example.com',
-  picture: 'https://example.com/user.jpg',
-  nickname: 'apple'
-};
-
 const useAuth0 = () => ({
   isAuthenticated: true,
-  user: mockUser,
+  user: {
+    email: 'apple@example.com',
+    picture: 'https://example.com/user.jpg',
+    nickname: 'apple'
+  },
+  logout: jest.fn(),
   loginWithRedirect: jest.fn(),
 });
 

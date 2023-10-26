@@ -1,18 +1,29 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { useRouter } from 'next/router';
-import { Auth0Provider, useAuth0 } from '../__mocks__/useAuth0';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import PrimarySearchAppBar from './header';
 
-jest.mock('../__mocks__/useAuth0');
+jest.mock("@auth0/auth0-react");
 
 describe("Header Component", () => {
   let component;
 
   beforeEach(() => {
+    useAuth0.mockReturnValue({
+      isAuthenticated: false,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+      user: {
+        email: 'apple@example.com',
+        picture: 'https://example.com/user.jpg',
+        nickname: 'apple'
+      }
+    });
+
     component = render(<PrimarySearchAppBar />);
   });
 
@@ -73,8 +84,27 @@ describe("when authorized", () => {
     component = render(<PrimarySearchAppBar />);
   });
 
-  test('should render account icon when authorized', async () => {
-    const accountIcon = await screen.getByTestId("AccountCircleIcon");
-    expect(accountIcon).toBeInTheDocument();
+  afterEach(() => {
+    component.unmount();
+  });
+
+  test('should render an account icon when authorized', async () => {
+    console.log(component.container.innerHTML);
+    await waitFor(() => {
+      const accountIcons = screen.getAllByTestId("AccountCircleIcon");
+      accountIcons.map( accountIcon => {
+        expect(accountIcon).toBeInTheDocument()
+      });
+    });
+  })
+
+  test('should render an account menu when you click the account icon', () => {
+    const accountIcons = screen.getAllByTestId("AccountCircleIcon");
+    userEvent.click(accountIcons[0]);
+
+    const myPageLinks = screen.getAllByText("マイページ")
+    myPageLinks.map( myPageLink => {
+      expect(myPageLink).toBeInTheDocument()
+    });
   })
 })

@@ -89,7 +89,6 @@ describe("when authorized", () => {
   });
 
   test('should render an account icon when authorized', async () => {
-    console.log(component.container.innerHTML);
     await waitFor(() => {
       const accountIcons = screen.getAllByTestId("AccountCircleIcon");
       accountIcons.map( accountIcon => {

@@ -5,7 +5,7 @@ import axios from "axios";
 import { Box } from "@mui/system";
 import Link from "next/link";
 
-function SearchResults() {
+export default function SearchResults() {
   const router = useRouter();
   const searchTerm = router.query.keyword;
 
@@ -16,7 +16,6 @@ function SearchResults() {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/shops/search?search=${searchTerm}`);
         setSearchResults(response.data);
-        console.log(router.query.keyword)
       } catch (e) {
         console.log(e.message)
       }
@@ -34,6 +33,4 @@ function SearchResults() {
       ))}
     </div>
   );
-}
-
-export default SearchResults;
+};

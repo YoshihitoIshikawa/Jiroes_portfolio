@@ -45,7 +45,7 @@ describe("Header Component", () => {
     expect(searchInput).toHaveValue("二郎");
   });
 
-  test('should render the search result page when you click a search button', async () => {
+  test('should contain the keywords in URL when you click the search button after typing keywords in the search input area', async () => {
     useRouter.mockReturnValue({
       push: (url) => {
         expect(url).toBe('/search?keyword=二郎');

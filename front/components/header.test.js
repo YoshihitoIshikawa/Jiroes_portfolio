@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -92,7 +91,7 @@ describe("when authorized", () => {
     await waitFor(() => {
       const accountIcons = screen.getAllByTestId("AccountCircleIcon");
       accountIcons.map( accountIcon => {
-        expect(accountIcon).toBeInTheDocument()
+        expect(accountIcon).toBeInTheDocument();
       });
     });
   })
@@ -101,9 +100,9 @@ describe("when authorized", () => {
     const accountIcons = screen.getAllByTestId("AccountCircleIcon");
     userEvent.click(accountIcons[0]);
 
-    const myPageLinks = screen.getAllByText("マイページ")
+    const myPageLinks = screen.getAllByText("マイページ");
     myPageLinks.map( myPageLink => {
-      expect(myPageLink).toBeInTheDocument()
+      expect(myPageLink).toBeInTheDocument();
     });
-  })
-})
+  });
+});

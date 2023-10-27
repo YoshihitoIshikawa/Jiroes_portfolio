@@ -25,9 +25,9 @@ describe("Search result page", () => {
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/api/v1/shops/search?search=Shop");
 
     expect(await screen.findByText("Shop 1")).toBeInTheDocument();
-    expect(screen.getByText("Shop 2")).toBeInTheDocument();
-    expect(screen.getByText("Access 1")).toBeInTheDocument();
-    expect(screen.getByText("Access 2")).toBeInTheDocument();
+    expect(await screen.findByText("Shop 2")).toBeInTheDocument();
+    expect(await screen.findByText("Access 1")).toBeInTheDocument();
+    expect(await screen.findByText("Access 2")).toBeInTheDocument();
   });
 
   test("should not render search results when no matching shops are found", async () => {
@@ -42,6 +42,6 @@ describe("Search result page", () => {
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/api/v1/shops/search?search=Shop");
 
     expect(await screen.queryByText("Shop 1")).not.toBeInTheDocument();
-    expect(screen.queryByText("Access 1")).not.toBeInTheDocument();
+    expect(await screen.queryByText("Access 1")).not.toBeInTheDocument();
   });
 });

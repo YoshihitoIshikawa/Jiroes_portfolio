@@ -19,7 +19,7 @@ const Profile = () => {
           <h2 className="text-4xl mb-16">プロフィール</h2>
           <div className="mb-10">
             <h2 className="text-2xl mb-3">プロフィール画像</h2>
-            <img className="rounded-lg" src={user.picture} alt={user.name} />
+            <img className="rounded-lg" src={user.picture} alt="user-pic" />
           </div>
           <div className="mb-10">
             <h2 className="text-2xl mb-2">ユーザーネーム</h2>

@@ -25,7 +25,7 @@ const formData = {
 jest.mock("@auth0/auth0-react");
 jest.spyOn(axios, "post").mockResolvedValue({ data: formData });
 jest.spyOn(window, 'alert').mockImplementation((message) => {
-  console.error('Alert:', message); // または適切な処理
+  console.error('Alert:', message);
 });
 
 describe("NewShop", () => {
@@ -75,18 +75,13 @@ describe("NewShop", () => {
     const nameInput = screen.getByLabelText("店舗名(必須)");
     const submitButton = screen.getByText("送信");
 
-    // フォーム入力
     await userEvent.type(nameInput, "Shop 1");
     await userEvent.click(submitButton);
 
-    // axios.post が正しく呼び出されたことを確認
     expect(await axios.post).toHaveBeenCalledWith(
       "http://localhost:3000/api/v1/shops",
       formData,
       { headers: headers }
     );
-
-    // フォームの送信に成功すると、リダイレクトまたは成功メッセージが表示されることを確認
-    // router.push() が呼ばれる場合などをテストする
   });
 });

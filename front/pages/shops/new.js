@@ -47,7 +47,6 @@ export default function NewShop() {
     }
     getToken()
   }, [])
-  console.log(token)
 
   async function onSubmit(data) {
     try {

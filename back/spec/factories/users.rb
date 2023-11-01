@@ -3,5 +3,6 @@ FactoryBot.define do
     nickname { "Test nickname" }
     email { "Test email" }
     picture { "Test picture" }
+    association :reviews
   end
 end

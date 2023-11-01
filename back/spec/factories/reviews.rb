@@ -4,5 +4,7 @@ FactoryBot.define do
     caption { "Test caption" }
     score { 5 }
     image { "test.png" }
+    association :user
+    association :shop
   end
 end

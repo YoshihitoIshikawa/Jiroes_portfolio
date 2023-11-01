@@ -68,51 +68,52 @@ describe('NewReview', () => {
     expect(imageErrorMessage).toBeInTheDocument();
   });
 
-  // FormDataでの送信に伴い、モック化したaxiosでは送信データが{}と空になってしまう問題があり実装中止。
-  // test('should submit the form', async () => {
-  //   const titleInput = screen.getByLabelText('商品名');
-  //   const captionInput = screen.getByLabelText('内容');
-  //   const imageInput = screen.getByTestId('fileInput');
-  //   const scoreInput = screen.getByTestId('scoreInput');
-  //   const scoreButton = within(scoreInput).getByRole('button');
+  // FormDataでの送信に伴い、モック化したaxiosでは送信データが{}と空になってしまう問題があり実装中止。23/10/31
+  // フォーム送信時にexpect.any(FormData)を使用し、実際送信されている値は正確ではないが検証したい事は実装できているので仕様変更。23/11/01
+  test('should submit the form', async () => {
+    const titleInput = screen.getByLabelText('商品名');
+    const captionInput = screen.getByLabelText('内容');
+    const imageInput = screen.getByTestId('fileInput');
+    const scoreInput = screen.getByTestId('scoreInput');
+    const scoreButton = within(scoreInput).getByRole('button');
 
-  //   await userEvent.click(scoreButton)
+    await userEvent.click(scoreButton)
 
-  //   const listBox = within(screen.getByRole("presentation")).getByRole("listbox");
-  //   const options = within(listBox).getAllByRole('option');
-  //   const selectedScore = options[0];
+    const listBox = within(screen.getByRole("presentation")).getByRole("listbox");
+    const options = within(listBox).getAllByRole('option');
+    const selectedScore = options[0];
 
-  //   await userEvent.click(selectedScore)
+    await userEvent.click(selectedScore)
 
-  //   await userEvent.type(titleInput, 'Test Title');
-  //   await userEvent.type(captionInput, 'Test Caption');
+    await userEvent.type(titleInput, 'Test Title');
+    await userEvent.type(captionInput, 'Test Caption');
 
-  //   const imageFile = new File(['image contents'], 'test.jpg', { type: 'image/jpg' });
-  //   await userEvent.upload(imageInput, imageFile);
+    const imageFile = new File(['image contents'], 'test.jpg', { type: 'image/jpg' });
+    await userEvent.upload(imageInput, imageFile);
 
-  //   const formData = new FormData()
-  //   const fileInput = imageFile
-  //   formData.append("title", titleInput)
-  //   formData.append("caption", captionInput)
-  //   formData.append("score", selectedScore)
-  //   formData.append("image", fileInput)
+    const formData = new FormData()
+    const fileInput = imageFile
+    formData.append("title", titleInput)
+    formData.append("caption", captionInput)
+    formData.append("score", selectedScore)
+    formData.append("image", fileInput)
 
-  //   jest.spyOn(axios, "post").mockResolvedValue({ data: formData });
+    jest.spyOn(axios, "post").mockResolvedValue({ data: formData });
 
-  //   const token = "dummyToken"
-  //   const headers = {
-  //     Authorization: `Bearer ${token}`,
-  //     "Content-Type": "multipart/form-data"
-  //   }
-  //   const router = useRouter();
+    const token = "dummyToken"
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data"
+    }
+    const router = useRouter();
 
-  //   const submitButton = screen.getByText('送信');
-  //   await userEvent.click(submitButton);
+    const submitButton = screen.getByText('送信');
+    await userEvent.click(submitButton);
 
-  //   expect(await axios.post).toHaveBeenCalledWith(
-  //     `http://localhost:3000/api/v1/shops/${router.query.shopId}/reviews`,
-  //     formData,
-  //     { headers: headers }
-  //   );
-  // });
+    expect(await axios.post).toHaveBeenCalledWith(
+      `http://localhost:3000/api/v1/shops/${router.query.shopId}/reviews`,
+      expect.any(FormData),
+      { headers: headers }
+    );
+  });
 });

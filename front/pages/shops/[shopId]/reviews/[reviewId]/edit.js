@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import { Box, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import * as yup from "yup";
@@ -203,7 +202,7 @@ export default function EditReview({ review }) {
   } else {
     return (
       <div className="sm:w-1/2 flex flex-col">
-        <div className="mb-8 text-2xl">レビュー投稿をするにはログインが必要です。</div>
+        <div className="mb-8 text-2xl">レビュー編集をするにはログインが必要です。</div>
       </div>
     )
   }

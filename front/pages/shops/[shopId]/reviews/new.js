@@ -74,7 +74,6 @@ export default function NewReview() {
       router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
-      console.log(data)
     };
   };
 

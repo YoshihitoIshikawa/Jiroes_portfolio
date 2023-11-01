@@ -16,7 +16,7 @@ export async function getStaticProps({ params }) {
   const res = await axios.get(`http://localhost:3000/api/v1/shops/${params.shopId}/reviews/${params.reviewId}`);
   const review = res.data;
   return {
-    props: {review: review, params: params}
+    props: { review: review }
   };
 }
 
@@ -46,7 +46,7 @@ export async function getStaticPaths() {
   }
 }
 
-export default function ShopPage({ review }) {
+export default function ReviewPage({ review }) {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0()
   const router = useRouter();
   const { shopId, reviewId } = router.query;
@@ -70,8 +70,7 @@ export default function ShopPage({ review }) {
     try {
       const headers = {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          Authorization: `Bearer ${token}`
         }
       }
       await axios.delete(`http://localhost:3000/api/v1/shops/${shopId}/reviews/${reviewId}`, headers);

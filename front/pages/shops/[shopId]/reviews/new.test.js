@@ -68,7 +68,7 @@ describe('NewReview', () => {
     expect(imageErrorMessage).toBeInTheDocument();
   });
 
-  // FormDataでの送信に伴い、モック化したaxiosでは送信データが{}と空になってしまう問題があり、代替案も尽きた為実装中止。
+  // FormDataでの送信に伴い、モック化したaxiosでは送信データが{}と空になってしまう問題があり実装中止。
   // test('should submit the form', async () => {
   //   const titleInput = screen.getByLabelText('商品名');
   //   const captionInput = screen.getByLabelText('内容');

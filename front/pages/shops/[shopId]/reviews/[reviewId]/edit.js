@@ -123,7 +123,7 @@ export default function EditReview({ review }) {
   if (isAuthenticated) {
     return(
       <div className="sm:w-1/2 flex flex-col">
-        <h1 className="text-4xl mb-8">レビュー投稿</h1>
+        <h1 className="text-4xl mb-8">レビュー編集</h1>
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <Box mb={2}>
             <TextField
@@ -132,6 +132,7 @@ export default function EditReview({ review }) {
               label="商品名"
               variant="outlined"
               fullWidth
+              multiline
               error={ errors.title ? true : false }
             />
             <div className="mt-2 text-xs text-red-600">{ errors.title?.message }</div>
@@ -161,6 +162,7 @@ export default function EditReview({ review }) {
                     { ...field }
                     labelId="score"
                     id="demo-select-small"
+                    data-testid="scoreInput"
                     label="score"
                     error={ errors.score ? true : false }
                   >
@@ -187,6 +189,7 @@ export default function EditReview({ review }) {
                   type="file"
                   accept="image/*"
                   id="fileInput"
+                  data-testid="fileInput"
                 />
               )}
             />

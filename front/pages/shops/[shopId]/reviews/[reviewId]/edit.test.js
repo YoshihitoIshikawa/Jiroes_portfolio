@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import EditReview from './edit';
-import { data } from 'autoprefixer';
 
 jest.mock('next/router');
 jest.mock("@auth0/auth0-react");
@@ -38,7 +37,7 @@ describe('EditReview', () => {
 
     useAuth0.mockReturnValue({
       isAuthenticated: true,
-      getAccessTokenSilently: jest.fn(),
+      getAccessTokenSilently: jest.fn().mockResolvedValue("dummyToken"),
       getAccessTokenWithPopup: jest.fn(),
       user: { sub: '1234' }
     });
@@ -51,8 +50,7 @@ describe('EditReview', () => {
   });
 
   test('should render the edit review form', async () => {
-    console.log(data)
-    expect(screen.getByText('レビュー投稿')).toBeInTheDocument();
+    expect(screen.getByText('レビュー編集')).toBeInTheDocument();
     expect(screen.getByLabelText('商品名')).toBeInTheDocument();
     expect(screen.getByLabelText('内容')).toBeInTheDocument();
     expect(screen.getByLabelText('評価')).toBeInTheDocument();
@@ -60,44 +58,73 @@ describe('EditReview', () => {
     expect(screen.getByText('送信')).toBeInTheDocument();
   });
 
-  it('should show validation errors when submitting an empty form', async () => {
+  test('should render the default values on the title, the caption and the score input areas', () => {
+    expect(screen.getByText('Review 1')).toBeInTheDocument();
+    expect(screen.getByText('Test caption')).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
+  })
 
-    const submitButton = screen.getByText('送信');
-    userEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(screen.getByText('入力必須項目です。')).toBeInTheDocument();
-      expect(screen.queryByText('画像を選択して下さい。')).not.toBeInTheDocument();
-    });
-  });
-
-  it('should submit the form for an authenticated user', async () => {
+  test('should render the validation messages', async () => {
     const titleInput = screen.getByLabelText('商品名');
     const captionInput = screen.getByLabelText('内容');
-    const scoreInput = screen.getByLabelText('評価');
-    const imageInput = screen.getByTestId('fileInput');
 
-    userEvent.type(titleInput, 'New Title');
-    userEvent.type(captionInput, 'New Caption');
-    userEvent.selectOptions(scoreInput, '5');
-    const imageFile = new File(['image contents'], 'test.jpg', { type: 'image/jpg' });
-    userEvent.upload(imageInput, imageFile);
+    await userEvent.clear(titleInput)
+    await userEvent.clear(captionInput)
 
     const submitButton = screen.getByText('送信');
-    userEvent.click(submitButton);
+    await userEvent.click(submitButton);
 
-    // Assert that the form data is submitted
-    await waitFor(() => {
-      expect(axios.patch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/v1/shops/1/reviews/1',
-        expect.any(FormData),
-        {
-          headers: {
-            Authorization: 'Bearer dummyToken',
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+    const errs = await screen.findAllByText('入力必須項目です。')
+    errs.map( err => {
+      expect(err).toBeInTheDocument();
     });
+    expect(await screen.findByText('画像を選択して下さい。')).toBeInTheDocument();
+  });
+
+  test('should submit the form for an authenticated user', async () => {
+    const titleInput = screen.getByLabelText('商品名');
+    const captionInput = screen.getByLabelText('内容');
+    const imageInput = screen.getByTestId('fileInput');
+    const scoreInput = screen.getByTestId('scoreInput');
+    const scoreButton = within(scoreInput).getByRole('button');
+
+    await userEvent.click(scoreButton)
+
+    const listBox = within(screen.getByRole("presentation")).getByRole("listbox");
+    const options = within(listBox).getAllByRole('option');
+    const selectedScore = options[1];
+
+    await userEvent.click(selectedScore)
+
+    await userEvent.type(titleInput, 'New Title');
+    await userEvent.type(captionInput, 'New Caption');
+
+    const imageFile = new File(['image contents'], 'test.jpg', { type: 'image/jpg' });
+    await userEvent.upload(imageInput, imageFile);
+
+    const formData = new FormData()
+    const fileInput = imageFile
+    formData.append("title", titleInput)
+    formData.append("caption", captionInput)
+    formData.append("score", selectedScore)
+    formData.append("image", fileInput)
+
+    jest.spyOn(axios, "patch").mockResolvedValue({ data: formData });
+
+    const token = "dummyToken"
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data"
+    }
+    const router = useRouter();
+
+    const submitButton = screen.getByText('送信');
+    await userEvent.click(submitButton);
+
+    expect(await axios.patch).toHaveBeenCalledWith(
+      `http://localhost:3000/api/v1/shops/${router.query.shopId}/reviews/${router.query.reviewId}`,
+      expect.any(FormData),
+      { headers: headers }
+    );
   });
 });

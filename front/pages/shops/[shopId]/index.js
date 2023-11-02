@@ -117,7 +117,7 @@ export default function ShopPage({ shop, reviews }) {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-hidden mb-20">
-                <table className="min-w-full text-left md:text-lg font-light">
+                <table className="min-w-full text-left md:text-lg font-light mb-4">
                   <tbody>
                     <tr className="border-b dark:border-neutral-500">
                       <th className="whitespace-nowrap px-6 py-4">
@@ -217,6 +217,11 @@ export default function ShopPage({ shop, reviews }) {
                     </tr>
                   </tbody>
                 </table>
+                <Link href={`/shops/${shopId}/edit`}>
+                  <Button variant="outlined">
+                    <CreateIcon/>編集
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

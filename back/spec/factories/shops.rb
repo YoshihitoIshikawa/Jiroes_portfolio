@@ -13,6 +13,5 @@ FactoryBot.define do
     prohibited_matters { "Test prohibited matters" }
     remarks { "Test remarks" }
     when_to_buy_tickets { "Test when to buy tickets" }
-    # association :review
   end
 end

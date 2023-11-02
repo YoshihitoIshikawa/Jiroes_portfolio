@@ -1,8 +1,5 @@
 FactoryBot.define do
   factory :user do
-    nickname { "Test nickname" }
-    email { "Test email" }
-    picture { "Test picture" }
-    association :review
+    sub { "test sub" }
   end
 end

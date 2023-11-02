@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'GET /users', type: :request do
-  it 'gets all users' do
+  it 'returns all users' do
     10.times do |i|
       FactoryBot.create(:user, sub: "unique_sub_#{i}")
     end

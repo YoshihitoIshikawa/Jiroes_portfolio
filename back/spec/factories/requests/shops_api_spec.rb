@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'GET /shops', type: :request do
-  it 'gets all shops' do
+  it 'returns all shops' do
     FactoryBot.create_list(:shop, 10)
     get api_v1_shops_path
     json = JSON.parse(response.body)
@@ -12,7 +12,7 @@ describe 'GET /shops', type: :request do
 end
 
 describe 'GET /shop/:id', type: :request do
-  it 'gets a shop by the shops id' do
+  it 'returns a specific shop by the shops id' do
     shop = FactoryBot.create(:shop)
     get api_v1_shop_path(shop.id)
     json = JSON.parse(response.body)
@@ -82,7 +82,7 @@ describe 'DELETE /shop/:id', type: :request do
     authorization_stub
   end
 
-  it 'deletes a shop' do
+  it 'deletes a specific shop' do
     shop = FactoryBot.create(:shop)
 
     delete api_v1_shop_path(shop.id)

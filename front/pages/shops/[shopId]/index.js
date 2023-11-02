@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import CreateIcon from '@mui/icons-material/Create';
 import { Button } from "@mui/material";
 import moment from "moment";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,6 +69,8 @@ export async function getStaticPaths() {
 
 export default function ShopPage({ shop, reviews }) {
   const [value, setValue] = React.useState(0);
+
+  const { isAuthenticated } = useAuth0()
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -217,11 +220,14 @@ export default function ShopPage({ shop, reviews }) {
                     </tr>
                   </tbody>
                 </table>
-                <Link href={`/shops/${shopId}/edit`}>
-                  <Button variant="outlined">
-                    <CreateIcon/>編集
-                  </Button>
-                </Link>
+                { isAuthenticated ?
+                  <Link href={`/shops/${shopId}/edit`}>
+                    <Button variant="outlined">
+                      <CreateIcon/>編集
+                    </Button>
+                  </Link> :
+                  <div></div>
+                }
               </div>
             </div>
           </div>

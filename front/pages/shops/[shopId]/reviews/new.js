@@ -49,7 +49,6 @@ export default function NewReview() {
           })
           setToken(accessToken)
         }
-
       }
     }
     getToken()
@@ -75,7 +74,6 @@ export default function NewReview() {
       router.push("/")
     } catch (err) {
       alert("登録に失敗しました。")
-      console.log(data)
     };
   };
 
@@ -126,6 +124,7 @@ export default function NewReview() {
                     { ...field }
                     labelId="score"
                     id="demo-select-small"
+                    data-testid="scoreInput"
                     label="score"
                     error={ errors.score ? true : false }
                   >
@@ -152,6 +151,7 @@ export default function NewReview() {
                   type="file"
                   accept="image/*"
                   id="fileInput"
+                  data-testid="fileInput"
                 />
               )}
             />

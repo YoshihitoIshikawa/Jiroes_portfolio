@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import { useEffect } from "react";
-import LoginButton from "@/components/logInButton";
 
 export default function NewShop() {
   const schema = yup.object({
@@ -48,7 +47,6 @@ export default function NewShop() {
     }
     getToken()
   }, [])
-  console.log(token)
 
   async function onSubmit(data) {
     try {
@@ -218,7 +216,6 @@ export default function NewShop() {
     return (
       <div className="sm:w-1/2 flex flex-col">
         <div className="mb-8 text-2xl">店舗登録をするにはログインが必要です。</div>
-        <LoginButton/>
       </div>
     )
   }

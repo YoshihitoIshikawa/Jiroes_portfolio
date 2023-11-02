@@ -2,7 +2,6 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import Link from "next/link";
@@ -113,7 +112,6 @@ export default function ShopPage({ shop, reviews }) {
             <Link className="text-xl" href={`/shops/${shopId}/reviews/new`}>⇨最初のレビューを投稿する。</Link>
           </div>
           }
-
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

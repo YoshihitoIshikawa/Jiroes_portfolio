@@ -97,7 +97,7 @@ export default function EditShop({ shop }) {
   if (isAuthenticated) {
     return(
       <div className="sm:w-1/2 flex flex-col">
-        <h1 className="text-4xl mb-8">新規店舗登録</h1>
+        <h1 className="text-4xl mb-8">店舗情報編集</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb={2}>
             <TextField

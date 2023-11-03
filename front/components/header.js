@@ -1,21 +1,20 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import RamenDiningIcon from '@mui/icons-material/RamenDining';
-import Link from 'next/link';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import RamenDiningIcon from '@mui/icons-material/RamenDining'
+import SearchIcon from '@mui/icons-material/Search'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import InputBase from '@mui/material/InputBase'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import { styled, alpha } from '@mui/material/styles'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { useState } from 'react'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -31,17 +30,7 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: 'auto',
   },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -55,51 +44,47 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch',
     },
   },
-}));
+}))
 
 export default function PrimarySearchAppBar() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0()
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('')
 
-  // const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
+  const router = useRouter()
 
   const handleSearch = async () => {
-    // setLoading(true);
     try {
-      router.push(`/search?keyword=${searchTerm}`);
+      router.push(`/search?keyword=${searchTerm}`)
     } catch (error) {
-      console.error('検索エラー:', error);
+      console.error('検索エラー:', error)
     }
-    // setLoading(false);
-  };
+  }
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpen = Boolean(anchorEl)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+    setMobileMoreAnchorEl(null)
+  }
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+    setAnchorEl(null)
+    handleMobileMenuClose()
+  }
 
   const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = 'primary-search-account-menu'
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -116,14 +101,22 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>店舗一覧</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/profile'}>マイページ</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/shops'}>店舗一覧</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/shops/new'}>新規店舗登録</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <p onClick={() => logout()}>ログアウト</p>
+      </MenuItem>
     </Menu>
-  );
+  )
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -140,74 +133,88 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><Link href={"/profile"}>マイページ</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops"}>店舗一覧</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link href={"/shops/new"}>新規店舗登録</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><p onClick={() => logout()}>ログアウト</p></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/profile'}>マイページ</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/shops'}>店舗一覧</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href={'/shops/new'}>新規店舗登録</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <p onClick={() => logout()}>ログアウト</p>
+      </MenuItem>
     </Menu>
-  );
+  )
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" className='bg-zinc-800'>
+      <AppBar position='static' className='bg-zinc-800'>
         <Toolbar>
-          <RamenDiningIcon className='mr-2'/>
+          <RamenDiningIcon className='mr-2' />
           <Typography
-            variant="h6"
+            variant='h6'
             className='mr-3 font-black'
-            component="div"
-            sx={{ display: {sm: 'block' } }}
+            component='div'
+            sx={{ display: { sm: 'block' } }}
           >
-            <Link href="/">JIROES</Link>
+            <Link href='/'>JIROES</Link>
           </Typography>
           <Search>
             <StyledInputBase
-              placeholder="店名・エリア検索"
+              placeholder='店名・エリア検索'
               inputProps={{ 'aria-label': 'search' }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Search>
-          <SearchIcon className='cursor-pointer' onClick={handleSearch}/>
+          <SearchIcon className='cursor-pointer' onClick={handleSearch} />
           <Box sx={{ flexGrow: 1 }} />
-          { isAuthenticated ?
+          {isAuthenticated ? (
             <>
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
+                  size='large'
+                  edge='end'
+                  aria-label='account of current user'
+                  aria-controls={menuId}
+                  aria-haspopup='true'
+                  onClick={handleProfileMenuOpen}
+                  color='inherit'
                 >
                   <AccountCircle />
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
-                  size="large"
-                  aria-label="show more"
+                  size='large'
+                  aria-label='show more'
                   aria-controls={mobileMenuId}
-                  aria-haspopup="true"
+                  aria-haspopup='true'
                   onClick={handleMobileMenuOpen}
-                  color="inherit"
+                  color='inherit'
                 >
                   <AccountCircle />
                 </IconButton>
-            </Box>
-          </> :
-          <div className='flex items-center'>
-            <div>
-              <p className="cursor-pointer text-xs md:text-base whitespace-nowrap" onClick={() => loginWithRedirect()}>ログイン</p>
+              </Box>
+            </>
+          ) : (
+            <div className='flex items-center'>
+              <div>
+                <p
+                  className='cursor-pointer whitespace-nowrap text-xs md:text-base'
+                  onClick={() => loginWithRedirect()}
+                >
+                  ログイン
+                </p>
+              </div>
             </div>
-          </div>
-          }
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
     </Box>
-  );
+  )
 }

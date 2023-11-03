@@ -1,12 +1,12 @@
-import PrimarySearchAppBar from "./header"
-import Footer from "./footer"
+import Footer from './footer'
+import PrimarySearchAppBar from './header'
 
 export default function Layout({ children }) {
   return (
     <>
       <PrimarySearchAppBar />
-      <div className="bg-yellow-200 -z-50 min-h-screen">
-        <main className="py-20 flex justify-center">{children}</main>
+      <div className='-z-50 min-h-screen bg-yellow-200'>
+        <main className='flex justify-center py-20'>{children}</main>
       </div>
       <Footer />
     </>

@@ -1,10 +1,15 @@
 class Api::V1::ReviewsController < SecuredController
-  skip_before_action :authorize_request, only: [:index,:show]
+  skip_before_action :authorize_request, only: [:index, :show]
 
   def index
     @shop = Shop.find(params[:shop_id])
     @reviews = @shop.reviews
     render json: @reviews
+  end
+
+  def show
+    @review = Review.find(params[:id])
+    render json: @review
   end
 
   def create
@@ -14,11 +19,6 @@ class Api::V1::ReviewsController < SecuredController
     else
       render json: @review.errors, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @review = Review.find(params[:id])
-    render json: @review
   end
 
   def update
@@ -40,6 +40,7 @@ class Api::V1::ReviewsController < SecuredController
   end
 
   private
+
   def review_params
     params.permit(:title, :caption, :image, :score, :sub, :shop_id)
   end

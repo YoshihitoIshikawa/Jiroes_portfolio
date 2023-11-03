@@ -27,6 +27,5 @@ describe 'POST /users', type: :request do
     created_user = JSON.parse(response.body)
 
     expect(created_user['sub']).to eq(new_user[:sub])
-
   end
 end

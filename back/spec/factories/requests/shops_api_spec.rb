@@ -44,7 +44,6 @@ describe 'POST /shops', type: :request do
     expect(created_shop['name']).to eq(new_shop[:name])
     expect(created_shop['address']).to eq(new_shop[:address])
     expect(created_shop['phone_number']).to eq(new_shop[:phone_number])
-
   end
 end
 
@@ -59,7 +58,7 @@ describe 'PATCH /shop/:id', type: :request do
     updated_shop_data = {
       name: 'Updated Shop Name',
       address: 'Updated Address',
-      phone_number: '124-456-7890',
+      phone_number: '124-456-7890'
     }
     updated_shop = FactoryBot.create(:shop, updated_shop_data)
 
@@ -102,7 +101,7 @@ describe 'GET /api/v1/shops/search', type: :request do
   it 'searches for shops with a valid search term' do
     shop1 = create(:shop, name: 'Test Shop 1', address: 'Address 1', access: 'Access 1')
     shop2 = create(:shop, name: 'Test Shop 2', address: 'Address 2', access: 'Access 2')
-    shop3 = create(:shop, name: 'Shop 3', address: 'Address 3', access: 'Access 3')
+    create(:shop, name: 'Shop 3', address: 'Address 3', access: 'Access 3')
 
     search_term = 'Test'
 

@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
 
 module.exports = {
   webpack: (config, { isServer }) => {
@@ -14,9 +11,19 @@ module.exports = {
         dns: false,
         module: false,
         async_hooks: false,
-      };
+      }
     }
 
-    return config;
+    return config
   },
-};
+  images: {
+    remotePatterns: [
+      {
+        hostname: 's.gravatar.com',
+      },
+      {
+        hostname: 'localhost',
+      },
+    ],
+  },
+}

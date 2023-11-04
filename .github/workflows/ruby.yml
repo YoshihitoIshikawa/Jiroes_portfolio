@@ -17,6 +17,7 @@ jobs:
 
       - name: Bundle Install
         run: bundle install
+        working-directory: /home/runner/work/Jiroes_portfolio/back
 
       - name: Run RuboCop
         run: bundle exec rubocop

@@ -5,6 +5,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
 
     steps:
       - name: Checkout code
@@ -17,7 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: /home/runner/work/Jiroes_portfolio/front
 
       - name: Run ESLint
         run: npm run lint

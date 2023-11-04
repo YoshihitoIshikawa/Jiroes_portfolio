@@ -24,10 +24,10 @@ jobs:
       - name: Run RuboCop
         run: bundle exec rubocop
 
-        - name: Create and migrate Database
-        run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+      - name: Create and migrate Database
+      run: |
+        bundle exec rails db:create RAILS_ENV=test
+        bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Run RSpec
         run: bundle exec rspec

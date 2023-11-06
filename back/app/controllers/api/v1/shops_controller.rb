@@ -36,10 +36,10 @@ class Api::V1::ShopsController < SecuredController
 
   def search
     @shops = if params[:search].present?
-               Shop.where('name LIKE ? OR address LIKE ? OR access LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-             else
-               Shop.all
-             end
+      Shop.where('name LIKE ? OR address LIKE ? OR access LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      Shop.all
+    end
     render json: @shops
   end
 

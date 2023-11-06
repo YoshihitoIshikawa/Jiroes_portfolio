@@ -18,13 +18,13 @@ class JsonWebToken
     jwks_raw = Net::HTTP.get URI("#{ENV['AUTH0_DOMAIN']}.well-known/jwks.json")
     jwks_keys = Array(JSON.parse(jwks_raw)['keys'])
     Hash[
-      jwks_keys
-      .map do |k|
+      jwks_keys.
+        map do |k|
         [
           k['kid'],
           OpenSSL::X509::Certificate.new(
             Base64.decode64(k['x5c'].first)
-          ).public_key
+          ).public_key,
         ]
       end
     ]

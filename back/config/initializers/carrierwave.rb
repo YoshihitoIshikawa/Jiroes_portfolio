@@ -13,7 +13,7 @@ CarrierWave.configure do |config|
       aws_access_key_id: ENV.fetch('S3_ACCESS_KEY_ID', nil),
       aws_secret_access_key: ENV.fetch('S3_SECRET_ACCESS_KEY', nil),
       region: 'ap-northeast-1',
-      path_style: true
+      path_style: true,
     }
   else
     config.storage = :file

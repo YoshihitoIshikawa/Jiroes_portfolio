@@ -17,7 +17,7 @@ end
 describe 'POST /users', type: :request do
   it 'creates a new user' do
     new_user = {
-      sub: "new_sub"
+      sub: "new_sub",
     }
     post api_v1_users_path, params: new_user
 

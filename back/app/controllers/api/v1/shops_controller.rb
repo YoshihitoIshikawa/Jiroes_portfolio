@@ -35,10 +35,15 @@ class Api::V1::ShopsController < SecuredController
   end
 
   def search
-    @shops = if params[:search].present?
-      Shop.where('name LIKE ? OR address LIKE ? OR access LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+    if params[:search].present?
+      @shops = Shop.where(
+        'name LIKE ? OR address LIKE ? OR access LIKE ?',
+        "%#{params[:search]}%",
+        "%#{params[:search]}%",
+        "%#{params[:search]}%"
+      )
     else
-      Shop.all
+      @shops = Shop.all
     end
     render json: @shops
   end
@@ -46,6 +51,7 @@ class Api::V1::ShopsController < SecuredController
   private
 
   def shop_params
-    params.permit(:name, :address, :phone_number, :access, :parking, :number_of_seats, :open_time, :menu, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
+    params.permit(:name, :address, :phone_number, :access, :parking, :number_of_seats, :open_time,
+:menu, :closed_days, :remarks, :prohibited_matters, :when_to_buy_tickets, :call_timing)
   end
 end

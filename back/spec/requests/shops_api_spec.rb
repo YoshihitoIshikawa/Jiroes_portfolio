@@ -32,7 +32,7 @@ describe 'POST /shops', type: :request do
     new_shop = {
       name: "Test name",
       address: "Test address",
-      phone_number: "Test phone number"
+      phone_number: "Test phone number",
     }
     post api_v1_shops_path, params: new_shop
 
@@ -58,7 +58,7 @@ describe 'PATCH /shop/:id', type: :request do
     updated_shop_data = {
       name: 'Updated Shop Name',
       address: 'Updated Address',
-      phone_number: '124-456-7890'
+      phone_number: '124-456-7890',
     }
     updated_shop = FactoryBot.create(:shop, updated_shop_data)
 

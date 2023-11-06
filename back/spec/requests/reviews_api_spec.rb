@@ -28,7 +28,7 @@ describe 'Api::V1::ReviewsController', type: :request do
         score: 5,
         sub: current_user.sub,
         shop_id: shop.id,
-        image: fixture_file_upload('test.png', 'image/png')
+        image: fixture_file_upload('test.png', 'image/png'),
       }
 
       post api_v1_shop_reviews_path(shop.id), params: review_params
@@ -62,7 +62,7 @@ describe 'Api::V1::ReviewsController', type: :request do
         score: 5,
         sub: current_user.sub,
         shop_id: shop.id,
-        image: fixture_file_upload('test.png', 'image/png')
+        image: fixture_file_upload('test.png', 'image/png'),
       }
       review = FactoryBot.create(:review, updated_params)
 
